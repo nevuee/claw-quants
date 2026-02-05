@@ -1,5 +1,6 @@
 'use client';
 
+import { memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Clock, Users, Target, Award } from 'lucide-react';
 import { AITrader } from '@/data/traders';
@@ -10,7 +11,7 @@ interface TraderCardProps {
   rank: number;
 }
 
-export default function TraderCard({ trader, rank }: TraderCardProps) {
+const TraderCard = memo(function TraderCard({ trader, rank }: TraderCardProps) {
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
       return `$${(value / 1000000).toFixed(2)}M`;
@@ -28,6 +29,10 @@ export default function TraderCard({ trader, rank }: TraderCardProps) {
     return 'text-gray-500 border-gray-500/30 bg-gray-500/10';
   };
 
+  // Memoize static parts or expensive calculations if any
+  const rankColor = useMemo(() => getRankColor(rank), [rank]);
+  const formattedMarketCap = useMemo(() => formatCurrency(trader.marketCap), [trader.marketCap]);
+
   return (
     <motion.div
       layout
@@ -41,7 +46,7 @@ export default function TraderCard({ trader, rank }: TraderCardProps) {
         {/* Rank Badge */}
         <div className="absolute top-4 right-4">
           <div
-            className={`w-12 h-12 rounded-full border-2 flex items-center justify-center font-bold text-lg ${getRankColor(rank)}`}
+            className={`w-12 h-12 rounded-full border-2 flex items-center justify-center font-bold text-lg ${rankColor}`}
           >
             #{rank}
           </div>
@@ -87,7 +92,8 @@ export default function TraderCard({ trader, rank }: TraderCardProps) {
                 stroke={trader.trend === 'up' ? '#10b981' : '#ef4444'}
                 strokeWidth={2}
                 dot={false}
-                animationDuration={2000}
+                animationDuration={500} // Reduced from 2000ms for smoother live updates
+                isAnimationActive={true}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -119,7 +125,7 @@ export default function TraderCard({ trader, rank }: TraderCardProps) {
               <Users className="w-4 h-4 text-[#FF6363]" />
               <span className="text-xs text-gray-600">Market Cap</span>
             </div>
-            <div className="text-xl font-bold text-gray-900">{formatCurrency(trader.marketCap)}</div>
+            <div className="text-xl font-bold text-gray-900">{formattedMarketCap}</div>
           </div>
 
           {/* Total Trades */}
@@ -156,4 +162,6 @@ export default function TraderCard({ trader, rank }: TraderCardProps) {
       </div>
     </motion.div>
   );
-}
+});
+
+export default TraderCard;

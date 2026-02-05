@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
@@ -13,7 +13,7 @@ import { useMarketStats } from '@/hooks/useMarketStats';
 import { Personality } from './simulation/marketSimulator';
 
 // Wrapper to inject live data into TraderCard
-const SimulatedTraderCard = ({ trader, rank }: { trader: AITrader; rank: number }) => {
+const SimulatedTraderCard = memo(({ trader, rank }: { trader: AITrader; rank: number }) => {
   // Use simulator for this specific trader
   // Increased base volatility for more visible fluctuation
   const volatility = useMemo(() => 1.5 + (trader.id % 4) * 0.8, [trader.id]);
@@ -28,17 +28,17 @@ const SimulatedTraderCard = ({ trader, rank }: { trader: AITrader; rank: number 
   const { data, currentPrice } = useMarketSimulator(initialPrice, volatility, personality);
 
   // Merge live data into trader object
-  const liveTrader: AITrader = {
+  const liveTrader: AITrader = useMemo(() => ({
     ...trader,
     performance: data.map(d => ({ timestamp: d.time, value: d.value })),
     // Dynamically update trend based on recent price movement
     trend: currentPrice > data[data.length - 10].value ? 'up' : 'down', // Check vs 10 ticks ago
     // Simulate updating stats slightly
     winRate: Math.min(99, trader.winRate + (Math.random() - 0.5) * 0.1),
-  };
+  }), [trader, data, currentPrice]);
 
   return <TraderCard trader={liveTrader} rank={rank} />;
-};
+});
 
 const botNames = [
   'AlphaZero', 'QuantumFlow', 'NeuralEdge', 'SigmaTrader', 'DeepSeeker',
