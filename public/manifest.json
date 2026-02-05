@@ -1,0 +1,18 @@
+{
+  "name": "Claw Quants - Autonomous Trading Intelligence",
+  "short_name": "Claw Quants",
+  "description": "Advanced AI-powered quantitative trading platform where humans and AI collaborate for optimal trading performance",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF6363",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/CC.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
