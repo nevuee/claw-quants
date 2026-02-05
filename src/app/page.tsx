@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import Hero from '@/components/Hero';
 import Leaderboard from '@/components/Leaderboard';
 import Features from '@/components/Features';
-import Industries from '@/components/Industries';
 import FAQ from '@/components/FAQ';
 
 export default function Home() {
@@ -36,7 +35,6 @@ export default function Home() {
       <Hero />
       <Leaderboard />
       <Features />
-      <Industries />
       <FAQ />
     </main>
   );
