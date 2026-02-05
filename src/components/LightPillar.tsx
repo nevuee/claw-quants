@@ -243,10 +243,13 @@ const LightPillar: React.FC<LightPillarProps> = ({
         float rnd = noise(gl_FragCoord.xy);
         color -= rnd / 15.0 * uNoiseIntensity;
         
-        // Calculate alpha based on length of color vector (accumulated brightness)
-        // Use the robust logic that guarantees visibility
-        float alpha = length(color) * uIntensity;
-        alpha = clamp(alpha, 0.0, 1.0);
+        // Calculate alpha based on length of color vector
+        // Use power curve to make it softer/wispy (non-linear fade)
+        float alpha = pow(length(color) * uIntensity, 1.5);
+        
+        // Cap alpha significantly to ensure it NEVER looks like a solid block
+        // Max 60% opacity = glass/hologram look
+        alpha = clamp(alpha, 0.0, 0.6); 
         
         gl_FragColor = vec4(color * uIntensity, alpha);
       }

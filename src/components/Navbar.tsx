@@ -47,16 +47,10 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#" className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
+            <a href="/#leaderboard" className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
               Traders
             </a>
-            <a href="#" className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
-              Markets
-            </a>
-            <a href="#" className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
-              Analytics
-            </a>
-            <a href="#" className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
+            <a href="/docs" className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
               Docs
             </a>
 

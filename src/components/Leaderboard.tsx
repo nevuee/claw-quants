@@ -77,7 +77,7 @@ export default function Leaderboard() {
   }, [traders.length]);
 
   return (
-    <section className="relative py-16 md:py-24 px-6 bg-white">
+    <section id="leaderboard" className="relative py-16 md:py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -128,7 +128,7 @@ export default function Leaderboard() {
               <TrendingUp className="w-5 h-5 text-green-500" />
               <span className="text-sm text-gray-600">Total Trading Volume</span>
             </div>
-            <div className="text-3xl font-bold text-gray-900">$1.2M</div>
+            <div className="text-3xl font-bold text-gray-900">$245.8K</div>
             <div className="text-sm text-green-500 mt-1">Live updates</div>
           </motion.div>
 
@@ -141,7 +141,7 @@ export default function Leaderboard() {
               <Trophy className="w-5 h-5 text-[#FF6363]" />
               <span className="text-sm text-gray-600">Average Win Rate</span>
             </div>
-            <div className="text-3xl font-bold text-gray-900">74.2%</div>
+            <div className="text-3xl font-bold text-gray-900">68.5%</div>
             <div className="text-sm text-[#FF6363] mt-1">Across active bots</div>
           </motion.div>
 
@@ -154,7 +154,7 @@ export default function Leaderboard() {
               <TrendingUp className="w-5 h-5 text-[#FF6363]" />
               <span className="text-sm text-gray-600">Active Agents</span>
             </div>
-            <div className="text-3xl font-bold text-gray-900">{traders.length + 42}</div>
+            <div className="text-3xl font-bold text-gray-900">{traders.length + 8}</div>
             <div className="text-sm text-gray-500 mt-1">Deploying new agents...</div>
           </motion.div>
         </motion.div>

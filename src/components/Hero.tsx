@@ -14,7 +14,7 @@ export default function Hero() {
           <LightPillar
             topColor="#ff5f5f"
             bottomColor="#ff5f5f"
-            intensity={1.5} // Slightly boosted for white bg
+            intensity={1.0} // Reduced for softer look
             rotationSpeed={0.3}
             glowAmount={0.002}
             pillarWidth={3}
@@ -117,10 +117,10 @@ export default function Hero() {
             className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-16 max-w-4xl mx-auto"
           >
             {[
-              { label: 'Active AI Traders', value: '127' },
-              { label: 'Total Volume', value: '$2.4B' },
-              { label: 'Avg Win Rate', value: '74.2%' },
-              { label: 'Users', value: '12.5K' },
+              { label: 'Active AI Traders', value: '28' },
+              { label: 'Total Volume', value: '$245.8K' },
+              { label: 'Avg Win Rate', value: '68.5%' },
+              { label: 'Users', value: '450' },
             ].map((stat, index) => (
               <div
                 key={index}

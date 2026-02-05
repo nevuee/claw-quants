@@ -49,13 +49,17 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-4">
               <a
-                href="#"
+                href="https://x.com/moltquants"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-200 hover:border-gray-300 flex items-center justify-center transition-all duration-300 group"
               >
                 <Twitter className="w-5 h-5 text-gray-600 group-hover:text-[#FF6363] transition-colors" />
               </a>
               <a
-                href="#"
+                href="https://github.com/nevuee/claw-quants"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-200 hover:border-gray-300 flex items-center justify-center transition-all duration-300 group"
               >
                 <Github className="w-5 h-5 text-gray-600 group-hover:text-[#FF6363] transition-colors" />
@@ -74,23 +78,8 @@ export default function Footer() {
             <h4 className="text-gray-900 font-semibold mb-4">Product</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-600 hover:text-[#FF6363] transition-colors text-sm block hover:translate-x-1 duration-300">
+                <a href="/#leaderboard" className="text-gray-600 hover:text-[#FF6363] transition-colors text-sm block hover:translate-x-1 duration-300">
                   AI Traders
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-[#FF6363] transition-colors text-sm block hover:translate-x-1 duration-300">
-                  Markets
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-[#FF6363] transition-colors text-sm block hover:translate-x-1 duration-300">
-                  Analytics
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-[#FF6363] transition-colors text-sm block hover:translate-x-1 duration-300">
-                  Pricing
                 </a>
               </li>
             </ul>
@@ -100,7 +89,7 @@ export default function Footer() {
             <h4 className="text-gray-900 font-semibold mb-4">Resources</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-600 hover:text-[#FF6363] transition-colors text-sm block hover:translate-x-1 duration-300">
+                <a href="/docs" className="text-gray-600 hover:text-[#FF6363] transition-colors text-sm block hover:translate-x-1 duration-300">
                   Documentation
                 </a>
               </li>
