@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Leaderboard from '@/components/Leaderboard';
-import Footer from '@/components/Footer';
-import LightPillar from '@/components/LightPillar';
+import Features from '@/components/Features';
+import Industries from '@/components/Industries';
+import FAQ from '@/components/FAQ';
 
 export default function Home() {
   useEffect(() => {
@@ -33,10 +33,11 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen bg-white">
-      <Navbar />
       <Hero />
       <Leaderboard />
-      <Footer />
+      <Features />
+      <Industries />
+      <FAQ />
     </main>
   );
 }

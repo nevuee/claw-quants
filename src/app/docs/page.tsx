@@ -1,202 +1,174 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Book, ChevronRight, Code, Shield, Cpu, Activity, Zap } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import { motion } from 'framer-motion';
+import { Search, ChevronRight, Book, Code, Terminal, Shield, Cpu, Activity } from 'lucide-react';
 
 const sections = [
     {
-        id: 'intro',
-        title: 'Introduction',
-        icon: Book,
-        content: (
-            <div className="space-y-6">
-                <h2 className="text-3xl font-bold text-gray-900">Introduction to Claw Quants</h2>
-                <p className="text-gray-600 leading-relaxed">
-                    Claw Quants is a next-generation decentralized quantitative trading infrastructure.
-                    We provide a permissionless execution layer where autonomous AI agents collaborate with human intelligence to optimize liquidity provisioning and arbitrage opportunities across decentralized exchanges.
-                </p>
-                <div className="p-6 bg-blue-50 border border-blue-100 rounded-xl">
-                    <h4 className="font-semibold text-blue-900 mb-2">Core Philosophy</h4>
-                    <p className="text-sm text-blue-800">
-                        Markets are efficient, but not perfect. Our autonomous agents exploit micro-inefficiencies in real-time, operating 24/7 with sub-millisecond latency.
-                    </p>
-                </div>
-            </div>
-        )
+        id: 'getting-started',
+        title: 'Getting Started',
+        icon: <Book className="w-4 h-4" />,
+        items: [
+            { id: 'introduction', title: 'Introduction' },
+            { id: 'architecture', title: 'Architecture' },
+            { id: 'tokenomics', title: 'Tokenomics' }
+        ]
     },
     {
-        id: 'architecture',
-        title: 'System Architecture',
-        icon: Cpu,
-        content: (
-            <div className="space-y-6">
-                <h2 className="text-3xl font-bold text-gray-900">System Architecture</h2>
-                <p className="text-gray-600 leading-relaxed">
-                    The Claw Quants platform is built on a modular, event-driven architecture designed for high-frequency data ingestion and low-latency execution.
-                </p>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    <li className="p-4 border border-gray-200 rounded-lg">
-                        <div className="font-semibold text-gray-900 mb-1">Execution Layer</div>
-                        <div className="text-sm text-gray-600">Rust-based smart contract interaction engine capable of batch transaction processing.</div>
-                    </li>
-                    <li className="p-4 border border-gray-200 rounded-lg">
-                        <div className="font-semibold text-gray-900 mb-1">Inference Node</div>
-                        <div className="text-sm text-gray-600">Distributed network of GPU nodes running proprietary Transformer models for price prediction.</div>
-                    </li>
-                    <li className="p-4 border border-gray-200 rounded-lg">
-                        <div className="font-semibold text-gray-900 mb-1">Data Pipeline</div>
-                        <div className="text-sm text-gray-600">Real-time WebSocket feeds aggregating order book depth from 50+ CEXs and DEXs.</div>
-                    </li>
-                    <li className="p-4 border border-gray-200 rounded-lg">
-                        <div className="font-semibold text-gray-900 mb-1">Consensus Mechanism</div>
-                        <div className="text-sm text-gray-600">Proof-of-Intelligence (PoI) verification for validating agent performance on-chain.</div>
-                    </li>
-                </ul>
-            </div>
-        )
-    },
-    {
-        id: 'risk',
-        title: 'Risk Engine',
-        icon: Shield,
-        content: (
-            <div className="space-y-6">
-                <h2 className="text-3xl font-bold text-gray-900">Adaptive Risk Engine</h2>
-                <p className="text-gray-600 leading-relaxed">
-                    Capital preservation is our primary directive. Every autonomous agent is monitored by a global risk engine that enforces strict drawdown limits and exposure caps.
-                </p>
-                <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-1">
-                            <span className="text-green-600 text-xs font-bold">1</span>
-                        </div>
-                        <div>
-                            <h4 className="font-semibold text-gray-900">Circuit Breakers</h4>
-                            <p className="text-sm text-gray-600">Auto-halt protocols trigger if volatility exceeds 300% of the 1-hour moving average.</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-1">
-                            <span className="text-green-600 text-xs font-bold">2</span>
-                        </div>
-                        <div>
-                            <h4 className="font-semibold text-gray-900">Position Sizing</h4>
-                            <p className="text-sm text-gray-600">Kelly Criterion optimization ensures no single trade risks more than 2% of the agent's total AUM.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
+        id: 'development',
+        title: 'Development',
+        icon: <Code className="w-4 h-4" />,
+        items: [
+            { id: 'deploy-agent', title: 'Deploying an Agent' },
+            { id: 'sdk-reference', title: 'SDK Reference' },
+            { id: 'testing', title: 'Backtesting' }
+        ]
     },
     {
         id: 'api',
         title: 'API Reference',
-        icon: Code,
-        content: (
-            <div className="space-y-6">
-                <h2 className="text-3xl font-bold text-gray-900">API Reference</h2>
-                <p className="text-gray-600 leading-relaxed">
-                    Integrate Claw Quants market data and signals directly into your own applications via our REST and WebSocket APIs.
-                </p>
-                <div className="bg-[#0f172a] rounded-xl p-6 overflow-x-auto">
-                    <code className="text-sm font-mono text-blue-400">
-                        <span className="text-purple-400">GET</span> /v1/market/tickers
-                    </code>
-                    <pre className="text-gray-400 text-xs mt-4 font-mono">
-                        {`{
-  "data": [
-    {
-      "symbol": "BTC-USDC",
-      "price": "64231.50",
-      "24h_volume": "1240500.00",
-      "volatility_index": "0.45"
-    }
-  ]
-}`}
-                    </pre>
-                </div>
-            </div>
-        )
+        icon: <Terminal className="w-4 h-4" />,
+        items: [
+            { id: 'websocket', title: 'WebSocket Feeds' },
+            { id: 'rest-api', title: 'REST Endpoints' }
+        ]
     }
 ];
 
 export default function DocsPage() {
-    const [activeSection, setActiveSection] = useState('intro');
+    const [activeSection, setActiveSection] = useState('introduction');
+    const [searchQuery, setSearchQuery] = useState('');
 
     return (
-        <main className="min-h-screen bg-white">
-            <Navbar />
+        <div className="min-h-screen bg-white pt-24 pb-12">
+            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row gap-12">
 
-            <div className="pt-24 max-w-7xl mx-auto px-6 pb-24">
-                <div className="flex flex-col md:flex-row gap-12">
+                {/* Sidebar Navigation */}
+                <aside className="w-full md:w-64 flex-shrink-0">
+                    <div className="sticky top-28 space-y-8">
+                        {/* Search */}
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                            <input
+                                type="text"
+                                placeholder="Search documentation..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF6363]/20 focus:border-[#FF6363] transition-all"
+                            />
+                        </div>
 
-                    {/* Sidebar Navigation */}
-                    <aside className="w-full md:w-64 flex-shrink-0">
-                        <div className="sticky top-32">
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Documentation</h3>
-                            <nav className="space-y-2">
-                                {sections.map((section) => (
-                                    <button
-                                        key={section.id}
-                                        onClick={() => setActiveSection(section.id)}
-                                        className={`w-full flex items-center justify-between p-3 rounded-lg text-sm font-medium transition-all duration-200 ${activeSection === section.id
-                                                ? 'bg-[#FF6363]/10 text-[#FF6363]'
-                                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                                            }`}
-                                    >
-                                        <div className="flex items-center gap-3">
-                                            <section.icon className={`w-4 h-4 ${activeSection === section.id ? 'text-[#FF6363]' : 'text-gray-400'}`} />
-                                            {section.title}
-                                        </div>
-                                        {activeSection === section.id && (
-                                            <motion.div layoutId="active-indicator">
-                                                <ChevronRight className="w-4 h-4" />
-                                            </motion.div>
-                                        )}
-                                    </button>
-                                ))}
-                            </nav>
-
-                            <div className="mt-12 p-4 bg-gray-50 rounded-xl border border-gray-200">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Activity className="w-4 h-4 text-green-500" />
-                                    <span className="text-xs font-bold text-gray-700">System Status</span>
+                        {/* Navigation Links */}
+                        <nav className="space-y-6">
+                            {sections.map((section) => (
+                                <div key={section.id}>
+                                    <div className="flex items-center gap-2 px-2 mb-3 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                        {section.icon}
+                                        {section.title}
+                                    </div>
+                                    <ul className="space-y-1">
+                                        {section.items.map((item) => (
+                                            <li key={item.id}>
+                                                <button
+                                                    onClick={() => setActiveSection(item.id)}
+                                                    className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${activeSection === item.id
+                                                            ? 'bg-[#FF6363]/10 text-[#FF6363] font-medium'
+                                                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                                        }`}
+                                                >
+                                                    {item.title}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
-                                <div className="text-xs text-green-600">All systems operational</div>
-                            </div>
-                        </div>
-                    </aside>
-
-                    {/* Main Content Area */}
-                    <div className="flex-1 min-h-[60vh]">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={activeSection}
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                transition={{ duration: 0.3 }}
-                                className="max-w-3xl"
-                            >
-                                {sections.find(s => s.id === activeSection)?.content}
-                            </motion.div>
-                        </AnimatePresence>
-
-                        <div className="mt-16 pt-8 border-t border-gray-100 flex justify-between text-sm text-gray-500">
-                            <span>Last updated: Just now</span>
-                            <a href="#" className="hover:text-[#FF6363] flex items-center gap-1 transition-colors">
-                                Edit on GitHub <Zap className="w-3 h-3" />
-                            </a>
-                        </div>
+                            ))}
+                        </nav>
                     </div>
+                </aside>
 
-                </div>
+                {/* Main Content */}
+                <main className="flex-1 min-w-0">
+                    <div className="prose prose-gray max-w-none">
+
+                        {/* Content: Introduction */}
+                        {activeSection === 'introduction' && (
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                                <h1 className="text-4xl font-bold text-gray-900 mb-6">Introduction to AI Quant Trade</h1>
+                                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                                    The world's first decentralized marketplace for autonomous trading agents.
+                                    We enable developers to deploy non-custodial quant algorithms and allow investors to copy-trade with verifiable on-chain proof.
+                                </p>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose mb-12">
+                                    <div className="p-6 bg-gray-50 rounded-xl border border-gray-200">
+                                        <Cpu className="w-8 h-8 text-[#FF6363] mb-4" />
+                                        <h3 className="text-lg font-bold text-gray-900 mb-2">Autonomous Execution</h3>
+                                        <p className="text-gray-600 text-sm">Agents run 24/7 on decentralized compute nodes, executing strategies without human intervention.</p>
+                                    </div>
+                                    <div className="p-6 bg-gray-50 rounded-xl border border-gray-200">
+                                        <Shield className="w-8 h-8 text-[#FF6363] mb-4" />
+                                        <h3 className="text-lg font-bold text-gray-900 mb-2">Verifiable Proof</h3>
+                                        <p className="text-gray-600 text-sm">All trades and performance metrics are anchored on-chain, ensuring tamper-proof history.</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {/* Content: Deploy Agent */}
+                        {activeSection === 'deploy-agent' && (
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                                <div className="flex items-center gap-3 mb-6">
+                                    <span className="px-3 py-1 bg-[#FF6363]/10 text-[#FF6363] rounded-full text-xs font-semibold">Developer Guide</span>
+                                    <span className="text-gray-400 text-sm">Estimated time: 15 mins</span>
+                                </div>
+
+                                <h1 className="text-4xl font-bold text-gray-900 mb-6">Deploying Your First Agent</h1>
+                                <p className="text-lg text-gray-600 mb-8">
+                                    Follow this guide to package your Python or TypeScript strategy and deploy it to the AI Quant network.
+                                </p>
+
+                                <h3 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. Install the CLI</h3>
+                                <div className="bg-[#1e1e1e] text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-lg overflow-x-auto">
+                                    <span className="text-[#FF6363]">$</span> npm install -g @ai-quant/cli<br />
+                                    <span className="text-[#FF6363]">$</span> ai-quant login
+                                </div>
+
+                                <h3 className="text-2xl font-bold text-gray-900 mt-12 mb-4">2. Initialize Project</h3>
+                                <div className="bg-[#1e1e1e] text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-lg overflow-x-auto">
+                                    <span className="text-[#FF6363]">$</span> ai-quant init my-strategy --template mean-reversion
+                                </div>
+
+                                <div className="p-4 border-l-4 border-[#FF6363] bg-[#FF6363]/5 rounded-r-lg my-8">
+                                    <h4 className="font-bold text-[#FF6363] mb-1">Requirement</h4>
+                                    <p className="text-sm text-gray-700">You must hold at least 1000 AIQ tokens to deploy a mainnet agent. This serves as a spam prevention mechanism.</p>
+                                </div>
+
+                                <h3 className="text-2xl font-bold text-gray-900 mt-12 mb-4">3. Deploy</h3>
+                                <div className="bg-[#1e1e1e] text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-lg overflow-x-auto">
+                                    <span className="text-[#FF6363]">$</span> ai-quant deploy --network mainnet
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {/* Fallback for other sections */}
+                        {(activeSection !== 'introduction' && activeSection !== 'deploy-agent') && (
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                                <h1 className="text-4xl font-bold text-gray-900 mb-6 capitalize">{activeSection.replace('-', ' ')}</h1>
+                                <div className="p-12 border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center justify-center text-center">
+                                    <Activity className="w-12 h-12 text-gray-300 mb-4" />
+                                    <h3 className="text-lg font-semibold text-gray-900">Content Coming Soon</h3>
+                                    <p className="text-gray-500 max-w-md mt-2">
+                                        Our team is currently writing the documentation for this section. Check back later or join our Discord for updates.
+                                    </p>
+                                </div>
+                            </motion.div>
+                        )}
+
+                    </div>
+                </main>
             </div>
-
-            <Footer />
-        </main>
+        </div>
     );
 }

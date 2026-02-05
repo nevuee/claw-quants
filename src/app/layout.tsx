@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ScrollToTop from '@/components/ScrollToTop';
+import { Providers } from './providers';
+import '@rainbow-me/rainbowkit/styles.css';
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -41,7 +46,12 @@ export default function RootLayout({
       <body
         className={`${jakarta.variable} antialiased`}
       >
-        {children}
+        <Providers>
+          <Navbar />
+          {children}
+          <Footer />
+          <ScrollToTop />
+        </Providers>
       </body>
     </html>
   );

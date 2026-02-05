@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import { TrendingUp, Sparkles, Zap } from 'lucide-react';
 import ShinyText from './ShinyText';
 import LightPillar from './LightPillar';
+import { useMarketStats } from '@/hooks/useMarketStats';
 
 export default function Hero() {
+  const stats = useMarketStats();
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-white">
       {/* Single Light Pillar - Center Only */}
@@ -63,12 +65,12 @@ export default function Hero() {
                 text="Algorithm"
                 speed={8}
                 delay={1}
-                color="#FF6363"
+                color="#ffffff"
                 shineColor="#ffffff"
                 spread={150}
                 direction="left"
                 disabled={false}
-                className="text-[#FF6363]"
+                className="text-white"
               />
             </span>
           </motion.h1>
@@ -81,7 +83,7 @@ export default function Hero() {
             className="text-xl md:text-2xl text-white max-w-3xl mx-auto leading-relaxed"
           >
             Where <span className="text-white font-semibold">humans</span> and{' '}
-            <span className="text-[#FF6363] font-semibold">AI</span> collaborate for
+            <span className="text-white font-semibold">AI</span> collaborate for
             superior quantitative trading performance. Deploy autonomous trading
             agents that never sleep.
           </motion.p>
@@ -93,20 +95,20 @@ export default function Hero() {
             transition={{ delay: 0.7, duration: 0.8 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8"
           >
-            <button className="group relative px-8 py-4 bg-[#FF6363] rounded-lg font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#FF6363]/50">
+            <a href="#leaderboard" className="group relative px-8 py-4 bg-[#FF6363] rounded-lg font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#FF6363]/50 inline-flex">
               <span className="relative z-10 flex items-center gap-2">
                 Explore AI Traders
                 <TrendingUp className="w-5 h-5" />
               </span>
               <div className="absolute inset-0 bg-[#FF4444] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </button>
+            </a>
 
-            <button className="group px-8 py-4 bg-gray-100 backdrop-blur-sm border border-gray-200 rounded-lg font-semibold text-gray-900 transition-all duration-300 hover:bg-gray-200 hover:border-gray-300">
+            <a href="#faq" className="group px-8 py-4 bg-gray-100 backdrop-blur-sm border border-gray-200 rounded-lg font-semibold text-gray-900 transition-all duration-300 hover:bg-gray-200 hover:border-gray-300 flex items-center justify-center">
               <span className="flex items-center gap-2">
-                How It Works
+                FAQ
                 <Zap className="w-5 h-5 text-[#FF6363]" />
               </span>
-            </button>
+            </a>
           </motion.div>
 
           {/* Stats */}
@@ -117,10 +119,10 @@ export default function Hero() {
             className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-16 max-w-4xl mx-auto"
           >
             {[
-              { label: 'Active AI Traders', value: '28' },
-              { label: 'Total Volume', value: '$245.8K' },
-              { label: 'Avg Win Rate', value: '68.5%' },
-              { label: 'Users', value: '450' },
+              { label: 'Active AI Traders', value: stats.activeTraders.toLocaleString() },
+              { label: 'Total Volume', value: `$${(stats.totalVolume / 1000).toFixed(1)}K` },
+              { label: 'Avg Win Rate', value: `${stats.avgWinRate.toFixed(1)}%` },
+              { label: 'Users', value: stats.totalUsers.toLocaleString() },
             ].map((stat, index) => (
               <div
                 key={index}

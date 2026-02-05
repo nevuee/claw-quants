@@ -3,25 +3,36 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, TrendingUp } from 'lucide-react';
+import Link from 'next/link';
 import { getTopTraders, AITrader } from '@/data/traders';
 import TraderCard from './TraderCard';
 import { useMarketSimulator } from './simulation/marketSimulator';
+import TraderDetailsModal from './TraderDetailsModal';
+import { useMarketStats } from '@/hooks/useMarketStats';
+
+import { Personality } from './simulation/marketSimulator';
 
 // Wrapper to inject live data into TraderCard
 const SimulatedTraderCard = ({ trader, rank }: { trader: AITrader; rank: number }) => {
   // Use simulator for this specific trader
-  // Use a stable volatility based on trader id to avoid re-renders changing behavior too wildly
-  const volatility = useMemo(() => 1 + (trader.id % 5), [trader.id]);
+  // Increased base volatility for more visible fluctuation
+  const volatility = useMemo(() => 1.5 + (trader.id % 4) * 0.8, [trader.id]);
   const initialPrice = useMemo(() => trader.performance[trader.performance.length - 1].value, [trader]);
 
-  const { data, currentPrice } = useMarketSimulator(initialPrice, volatility);
+  // Derive personality deterministically
+  const personality: Personality = useMemo(() => {
+    const types: Personality[] = ['stable', 'volatile', 'bullish', 'bearish', 'volatile'];
+    return types[trader.id % types.length];
+  }, [trader.id]);
+
+  const { data, currentPrice } = useMarketSimulator(initialPrice, volatility, personality);
 
   // Merge live data into trader object
   const liveTrader: AITrader = {
     ...trader,
     performance: data.map(d => ({ timestamp: d.time, value: d.value })),
     // Dynamically update trend based on recent price movement
-    trend: currentPrice > data[0].value ? 'up' : 'down',
+    trend: currentPrice > data[data.length - 10].value ? 'up' : 'down', // Check vs 10 ticks ago
     // Simulate updating stats slightly
     winRate: Math.min(99, trader.winRate + (Math.random() - 0.5) * 0.1),
   };
@@ -60,6 +71,9 @@ const generateNewTrader = (id: number): AITrader => {
 };
 
 export default function Leaderboard() {
+  const stats = useMarketStats();
+  const [selectedTrader, setSelectedTrader] = useState<AITrader | null>(null);
+
   // Initialize with static data
   const [traders, setTraders] = useState<AITrader[]>(getTopTraders(6));
 
@@ -104,7 +118,6 @@ export default function Leaderboard() {
           </p>
         </motion.div>
 
-        {/* Stats Bar */}
         <motion.div
           initial="hidden"
           whileInView="show"
@@ -128,7 +141,7 @@ export default function Leaderboard() {
               <TrendingUp className="w-5 h-5 text-green-500" />
               <span className="text-sm text-gray-600">Total Trading Volume</span>
             </div>
-            <div className="text-3xl font-bold text-gray-900">$245.8K</div>
+            <div className="text-3xl font-bold text-gray-900">${(stats.totalVolume / 1000).toFixed(1)}K</div>
             <div className="text-sm text-green-500 mt-1">Live updates</div>
           </motion.div>
 
@@ -141,7 +154,7 @@ export default function Leaderboard() {
               <Trophy className="w-5 h-5 text-[#FF6363]" />
               <span className="text-sm text-gray-600">Average Win Rate</span>
             </div>
-            <div className="text-3xl font-bold text-gray-900">68.5%</div>
+            <div className="text-3xl font-bold text-gray-900">{stats.avgWinRate.toFixed(1)}%</div>
             <div className="text-sm text-[#FF6363] mt-1">Across active bots</div>
           </motion.div>
 
@@ -154,7 +167,7 @@ export default function Leaderboard() {
               <TrendingUp className="w-5 h-5 text-[#FF6363]" />
               <span className="text-sm text-gray-600">Active Agents</span>
             </div>
-            <div className="text-3xl font-bold text-gray-900">{traders.length + 8}</div>
+            <div className="text-3xl font-bold text-gray-900">{stats.activeTraders.toLocaleString()}</div>
             <div className="text-sm text-gray-500 mt-1">Deploying new agents...</div>
           </motion.div>
         </motion.div>
@@ -163,7 +176,9 @@ export default function Leaderboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode='popLayout'>
             {traders.map((trader, index) => (
-              <SimulatedTraderCard key={trader.id} trader={trader} rank={index + 1} />
+              <div key={trader.id} onClick={() => setSelectedTrader(trader)} className="cursor-pointer">
+                <SimulatedTraderCard trader={trader} rank={index + 1} />
+              </div>
             ))}
           </AnimatePresence>
         </div>
@@ -183,12 +198,20 @@ export default function Leaderboard() {
             <p className="text-gray-600 mb-6">
               Join the network and let your algorithm compete in the global liquidity pool.
             </p>
-            <button className="px-8 py-4 bg-[#FF6363] rounded-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-[#FF4444] hover:shadow-lg hover:shadow-[#FF6363]/50">
+            <Link href="/docs" className="inline-block px-8 py-4 bg-[#FF6363] rounded-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-[#FF4444] hover:shadow-lg hover:shadow-[#FF6363]/50">
               Deploy Agent
-            </button>
+            </Link>
           </div>
         </motion.div>
       </div>
+
+      {/* Details Modal */}
+      {selectedTrader && (
+        <TraderDetailsModal
+          trader={selectedTrader}
+          onClose={() => setSelectedTrader(null)}
+        />
+      )}
     </section>
   );
 }
