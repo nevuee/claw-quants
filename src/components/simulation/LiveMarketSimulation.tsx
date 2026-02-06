@@ -24,22 +24,57 @@ const getRandomBot = () => {
 };
 
 export default function LiveMarketSimulation() {
-    const [bots, setBots] = useState<any[]>([
-        getRandomBot(),
-        getRandomBot(),
-        getRandomBot()
-    ]);
+    const [bots, setBots] = useState<any[]>([]);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    // Initialize bots from localStorage or defaults
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedBots = localStorage.getItem('market_sim_bots');
+            if (savedBots) {
+                try {
+                    // Restore date objects from strings
+                    const parsed = JSON.parse(savedBots).map((b: any) => ({
+                        ...b,
+                        deployedAt: new Date(b.deployedAt)
+                    }));
+                    setBots(parsed);
+                } catch (e) {
+                    console.error("Failed to load bots", e);
+                    setBots([getRandomBot(), getRandomBot(), getRandomBot()]);
+                }
+            } else {
+                setBots([getRandomBot(), getRandomBot(), getRandomBot()]);
+            }
+            setIsLoaded(true);
+        }
+    }, []);
+
+    // Save bots to localStorage whenever they update
+    useEffect(() => {
+        if (isLoaded && bots.length > 0) {
+            localStorage.setItem('market_sim_bots', JSON.stringify(bots));
+        }
+    }, [bots, isLoaded]);
 
     // Simulate new bots being deployed over time
     useEffect(() => {
+        if (!isLoaded) return;
+
         const interval = setInterval(() => {
             if (Math.random() > 0.7 && bots.length < 8) { // Max 8 bots to avoid clutter
-                setBots(prev => [getRandomBot(), ...prev]);
+                setBots(prev => {
+                    const newBot = getRandomBot();
+                    // Prepend new bot
+                    return [newBot, ...prev];
+                });
             }
         }, 5000); // Check every 5 seconds
 
         return () => clearInterval(interval);
-    }, [bots.length]);
+    }, [bots.length, isLoaded]);
+
+    if (!isLoaded) return null; // Or a loading skeleton
 
     return (
         <section className="py-24 relative overflow-hidden">

@@ -17,9 +17,9 @@ interface AITraderCardProps {
 
 const timeframes: Timeframe[] = ['5m', '15m', '1h', '4h', '1d'];
 
-export default function AITraderCard({ name, deployedAt, initialPrice, volatility, color }: AITraderCardProps) {
+export default function AITraderCard({ id, name, deployedAt, initialPrice, volatility, color }: AITraderCardProps) {
     const [activeTimeframe, setActiveTimeframe] = useState<Timeframe>('5m');
-    const { data, currentPrice } = useMarketSimulator(initialPrice, volatility);
+    const { data, currentPrice } = useMarketSimulator(initialPrice, volatility, 'stable', id); // Use id for persistence
 
     // Calculate stats based on current price relative to start
     const startPrice = data[0].value;
@@ -115,8 +115,8 @@ export default function AITraderCard({ name, deployedAt, initialPrice, volatilit
                             key={tf}
                             onClick={() => setActiveTimeframe(tf)}
                             className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 rounded-full transition-colors ${activeTimeframe === tf
-                                    ? 'bg-gray-900 text-white'
-                                    : 'text-gray-400 hover:bg-gray-100 font-medium'
+                                ? 'bg-gray-900 text-white'
+                                : 'text-gray-400 hover:bg-gray-100 font-medium'
                                 }`}
                         >
                             {tf}
