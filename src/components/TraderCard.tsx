@@ -84,7 +84,7 @@ const TraderCard = memo(function TraderCard({ trader, rank }: TraderCardProps) {
 
         {/* Performance Chart */}
         <div className="mb-6 h-24 -mx-2">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <LineChart data={trader.performance}>
               <Line
                 type="monotone"

@@ -74,7 +74,7 @@ export default function AITraderCard({ id, name, deployedAt, initialPrice, volat
 
             {/* Chart */}
             <div className="h-32 -mx-2 mb-4">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                     <AreaChart data={data}>
                         <defs>
                             <linearGradient id={`gradient-${name}`} x1="0" y1="0" x2="0" y2="1">
