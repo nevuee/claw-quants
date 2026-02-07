@@ -16,10 +16,10 @@ export default function Error({
     }, [error]);
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
+        <div className="min-h-screen bg-white flex items-center justify-center relative overflow-hidden">
             {/* Background Grid Effect */}
             <div
-                className="absolute inset-0 opacity-20"
+                className="absolute inset-0 opacity-40"
                 style={{
                     backgroundImage: `
             linear-gradient(rgba(239, 68, 68, 0.1) 1px, transparent 1px),
@@ -29,9 +29,9 @@ export default function Error({
                 }}
             />
 
-            {/* Glow Orbs */}
-            <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-red/30 rounded-full blur-[150px] animate-pulse" />
-            <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-yellow/20 rounded-full blur-[120px] animate-pulse" />
+            {/* Glow Orbs - Light Theme Adjusted */}
+            <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-red-100/50 rounded-full blur-[100px] animate-pulse mix-blend-multiply" />
+            <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-yellow-100/50 rounded-full blur-[100px] animate-pulse mix-blend-multiply" />
 
             <div className="relative z-10 text-center px-4 max-w-2xl mx-auto">
                 {/* Error Icon */}
@@ -41,9 +41,9 @@ export default function Error({
                     transition={{ duration: 0.5 }}
                     className="mb-8"
                 >
-                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-red/10 border border-red/30">
+                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-red-50 border border-red-100 shadow-sm">
                         <svg
-                            className="w-12 h-12 text-red"
+                            className="w-12 h-12 text-red-500"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -65,10 +65,10 @@ export default function Error({
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="mb-8"
                 >
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                         Something Went Wrong
                     </h1>
-                    <p className="text-gray-400 text-lg mb-2">
+                    <p className="text-gray-600 text-lg mb-2">
                         An unexpected error occurred while processing your request.
                     </p>
                     <p className="text-gray-500 text-sm">
@@ -82,12 +82,12 @@ export default function Error({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
-                        className="mb-8 p-4 rounded-lg bg-gray-900/50 border border-gray-800 text-left"
+                        className="mb-8 p-4 rounded-lg bg-gray-50 border border-gray-200 text-left shadow-inner"
                     >
                         <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">Error Details</p>
-                        <code className="text-sm text-red/80 break-all">{error.message}</code>
+                        <code className="text-sm text-red-600 break-all">{error.message}</code>
                         {error.digest && (
-                            <p className="text-xs text-gray-600 mt-2">Digest: {error.digest}</p>
+                            <p className="text-xs text-gray-500 mt-2">Digest: {error.digest}</p>
                         )}
                     </motion.div>
                 )}
@@ -101,7 +101,7 @@ export default function Error({
                 >
                     <button
                         onClick={reset}
-                        className="group relative px-8 py-3 bg-gradient-to-r from-red to-red/80 rounded-lg font-medium text-white overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(239,68,68,0.5)]"
+                        className="group relative px-8 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-medium text-white overflow-hidden transition-all duration-300 shadow-lg shadow-red-500/30"
                     >
                         <span className="relative z-10 flex items-center gap-2">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,7 +113,7 @@ export default function Error({
 
                     <a
                         href="/"
-                        className="px-8 py-3 border border-gray-700 rounded-lg font-medium text-gray-300 hover:border-gray-500 hover:text-white transition-all duration-300 flex items-center gap-2"
+                        className="px-8 py-3 border border-gray-200 bg-white rounded-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-300 flex items-center gap-2 shadow-sm"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -127,11 +127,11 @@ export default function Error({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.6 }}
-                    className="mt-16 flex items-center justify-center gap-3 text-gray-600"
+                    className="mt-16 flex items-center justify-center gap-3 text-gray-400"
                 >
-                    <div className="w-2 h-2 rounded-full bg-red/40 animate-pulse" />
-                    <span className="text-sm">Error Code: {error?.digest || 'Unknown'}</span>
-                    <div className="w-2 h-2 rounded-full bg-red/40 animate-pulse" />
+                    <div className="w-2 h-2 rounded-full bg-red-400/40 animate-pulse" />
+                    <span className="text-sm font-medium">Error Code: {error?.digest || 'Unknown'}</span>
+                    <div className="w-2 h-2 rounded-full bg-red-400/40 animate-pulse" />
                 </motion.div>
             </div>
         </div>

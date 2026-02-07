@@ -15,7 +15,7 @@ export default function GlobalError({
 
     return (
         <html>
-            <body style={{ margin: 0, padding: 0, backgroundColor: '#000000', color: '#ffffff', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            <body style={{ margin: 0, padding: 0, backgroundColor: '#ffffff', color: '#171717', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 <div style={{
                     minHeight: '100vh',
                     display: 'flex',
@@ -31,9 +31,9 @@ export default function GlobalError({
                         left: '30%',
                         width: '400px',
                         height: '400px',
-                        background: 'rgba(239, 68, 68, 0.2)',
+                        background: 'rgba(239, 68, 68, 0.1)',
                         borderRadius: '50%',
-                        filter: 'blur(150px)',
+                        filter: 'blur(100px)',
                     }} />
 
                     <div style={{ textAlign: 'center', padding: '20px', position: 'relative', zIndex: 10 }}>
@@ -43,8 +43,8 @@ export default function GlobalError({
                             height: '80px',
                             margin: '0 auto 24px',
                             borderRadius: '50%',
-                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                            border: '1px solid rgba(239, 68, 68, 0.3)',
+                            backgroundColor: '#fef2f2',
+                            border: '1px solid #fee2e2',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -54,10 +54,10 @@ export default function GlobalError({
                             </svg>
                         </div>
 
-                        <h1 style={{ fontSize: '36px', fontWeight: 'bold', marginBottom: '16px' }}>
+                        <h1 style={{ fontSize: '36px', fontWeight: 'bold', marginBottom: '16px', color: '#171717' }}>
                             Critical Error
                         </h1>
-                        <p style={{ color: '#a3a3a3', marginBottom: '8px', fontSize: '18px' }}>
+                        <p style={{ color: '#525252', marginBottom: '8px', fontSize: '18px' }}>
                             A critical error occurred in the application.
                         </p>
                         <p style={{ color: '#737373', marginBottom: '32px', fontSize: '14px' }}>
@@ -69,13 +69,14 @@ export default function GlobalError({
                                 onClick={reset}
                                 style={{
                                     padding: '12px 32px',
-                                    background: 'linear-gradient(to right, #ef4444, #dc2626)',
+                                    background: '#ef4444',
                                     border: 'none',
                                     borderRadius: '8px',
                                     color: 'white',
                                     fontWeight: '500',
                                     cursor: 'pointer',
                                     fontSize: '16px',
+                                    boxShadow: '0 4px 6px -1px rgba(239, 68, 68, 0.1), 0 2px 4px -1px rgba(239, 68, 68, 0.06)',
                                 }}
                             >
                                 Try Again
@@ -85,12 +86,13 @@ export default function GlobalError({
                                 href="/"
                                 style={{
                                     padding: '12px 32px',
-                                    border: '1px solid #404040',
+                                    border: '1px solid #e5e5e5',
                                     borderRadius: '8px',
-                                    color: '#d4d4d4',
+                                    color: '#525252',
                                     textDecoration: 'none',
                                     fontWeight: '500',
                                     fontSize: '16px',
+                                    backgroundColor: 'white',
                                 }}
                             >
                                 Return Home
@@ -102,3 +104,4 @@ export default function GlobalError({
         </html>
     );
 }
+
