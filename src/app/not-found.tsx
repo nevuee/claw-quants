@@ -5,21 +5,21 @@ import { motion } from 'framer-motion';
 
 export default function NotFound() {
     return (
-        <div className="min-h-screen bg-white flex items-center justify-center relative overflow-hidden">
+        <div className="min-h-screen bg-white flex items-start pt-32 justify-center relative overflow-hidden">
             {/* Background Grid Effect */}
             <div
                 className="absolute inset-0 opacity-40"
                 style={{
                     backgroundImage: `
-            linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+            linear-gradient(rgba(239, 68, 68, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(239, 68, 68, 0.1) 1px, transparent 1px)
           `,
                     backgroundSize: '50px 50px',
                 }}
             />
 
             {/* Glow Orbs - Adjusted for Light Theme */}
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-100/50 rounded-full blur-[100px] animate-pulse mix-blend-multiply" />
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-100/50 rounded-full blur-[100px] animate-pulse mix-blend-multiply" />
             <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-red-100/50 rounded-full blur-[100px] animate-pulse mix-blend-multiply" />
 
             <div className="relative z-10 text-center px-4">
@@ -58,7 +58,7 @@ export default function NotFound() {
                 >
                     <Link
                         href="/"
-                        className="group relative px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium text-white overflow-hidden transition-all duration-300 shadow-lg shadow-blue-500/30"
+                        className="group relative px-8 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-medium text-white overflow-hidden transition-all duration-300 shadow-lg shadow-red-500/30"
                     >
                         <span className="relative z-10 flex items-center gap-2">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

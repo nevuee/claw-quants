@@ -19,8 +19,9 @@ export default function GlobalError({
                 <div style={{
                     minHeight: '100vh',
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     justifyContent: 'center',
+                    paddingTop: '120px',
                     position: 'relative',
                     overflow: 'hidden',
                 }}>
@@ -101,7 +102,7 @@ export default function GlobalError({
                     </div>
                 </div>
             </body>
-        </html>
+        </html >
     );
 }
 

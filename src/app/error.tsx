@@ -16,7 +16,7 @@ export default function Error({
     }, [error]);
 
     return (
-        <div className="min-h-screen bg-white flex items-center justify-center relative overflow-hidden">
+        <div className="min-h-screen bg-white flex items-start pt-32 justify-center relative overflow-hidden">
             {/* Background Grid Effect */}
             <div
                 className="absolute inset-0 opacity-40"
