@@ -160,18 +160,15 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden mt-4 py-4 space-y-4"
+            className="md:hidden mt-4 py-4 px-4 space-y-3 bg-white/90 backdrop-blur-md rounded-lg border border-gray-200"
           >
-            <a href="#" className="block text-sm text-gray-700 hover:text-gray-900 transition-colors">
+            <a href="/#leaderboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-gray-700 hover:text-gray-900 transition-colors py-2">
               Traders
             </a>
-            <a href="#" className="block text-sm text-gray-700 hover:text-gray-900 transition-colors">
-              Markets
+            <a href="/#features" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-gray-700 hover:text-gray-900 transition-colors py-2">
+              Features
             </a>
-            <a href="#" className="block text-sm text-gray-700 hover:text-gray-900 transition-colors">
-              Analytics
-            </a>
-            <a href="#" className="block text-sm text-gray-700 hover:text-gray-900 transition-colors">
+            <a href="/docs" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-gray-700 hover:text-gray-900 transition-colors py-2">
               Docs
             </a>
             <ConnectButton.Custom>
@@ -197,7 +194,10 @@ export default function Navbar() {
                 if (!connected) {
                   return (
                     <button
-                      onClick={openConnectModal}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        openConnectModal();
+                      }}
                       className="w-full px-6 py-3 bg-[#FF6363] rounded-lg text-sm font-semibold text-white flex items-center justify-center gap-2"
                     >
                       <Wallet className="w-4 h-4" />
@@ -208,7 +208,13 @@ export default function Navbar() {
 
                 if (chain.unsupported) {
                   return (
-                    <button onClick={openChainModal} className="w-full px-6 py-3 bg-red-500 rounded-lg text-sm font-semibold text-white">
+                    <button 
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        openChainModal();
+                      }} 
+                      className="w-full px-6 py-3 bg-red-500 rounded-lg text-sm font-semibold text-white"
+                    >
                       Wrong network
                     </button>
                   );
@@ -216,7 +222,10 @@ export default function Navbar() {
 
                 return (
                   <button
-                    onClick={openAccountModal}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      openAccountModal();
+                    }}
                     className="w-full px-6 py-3 bg-white border border-gray-200 rounded-lg text-sm font-semibold text-gray-900 flex items-center justify-center gap-2"
                   >
                     {account.displayName}
